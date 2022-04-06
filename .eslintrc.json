@@ -11,5 +11,6 @@
         "no-trailing-spaces": [2, { "skipBlankLines": true }],
         "comma-dangle": ["error", "never"]
         
-    }
+    },
+    "parser": "@babel/eslint-parser"
 }
