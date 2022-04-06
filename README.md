@@ -1,4 +1,4 @@
-⚡️ Learning functional programming concepts by practical examples. These use cases might be overengineered for the task they have to achieve but in real-world scenarios, these technics are proven to be worthy.
+⚡️ Learning functional programming concepts by practical examples. These use cases might be overengineered for the task they achieve, but in real-world scenarios, these technics are proven to be worthy.
 
 ## Currying
 
