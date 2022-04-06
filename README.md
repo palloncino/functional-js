@@ -25,6 +25,5 @@ function curry(fn) {
 
 const sum = (x, y) => x + y
 const total = curry(sum);
-console.log(total(1)(1));
+console.log(total(1)(1)); // output: 2
 ```
-## 
