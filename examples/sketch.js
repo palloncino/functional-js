@@ -111,12 +111,12 @@ const objFilter = (obj, callback) => {
 };
 
 // /*** Uncomment these to check your work! ***/
-const startingObj = {};
-startingObj[6] = 3;
-startingObj[2] = 1;
-startingObj[12] = 4;
-const half = n => n / 2;
-console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
+// const startingObj = {};
+// startingObj[6] = 3;
+// startingObj[2] = 1;
+// startingObj[12] = 4;
+// const half = n => n / 2;
+// console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
 
 // CHALLENGE 13
 // Create a function rating that accepts an array (of functions) and a value. 
@@ -125,7 +125,12 @@ console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
 // the value is used as input.
 
 const rating = (arrOfFuncs, value) => {
-
+  let counter = 0;
+  arrOfFuncs.forEach(fn => {
+    fn(value) ? counter++ : null
+  })
+  const percentage = (100 / arrOfFuncs.length) * counter;
+  return `${percentage}%`;
 };
 
 // /*** Uncomment these to check your work! ***/
@@ -134,5 +139,50 @@ const rating = (arrOfFuncs, value) => {
 // const isSquare = n => Math.sqrt(n) % 1 === 0;
 // const hasSix = n => n.toString().includes('6');
 // const checks = [isEven, greaterThanFour, isSquare, hasSix];
-// console.log(rating(checks, 64)); // should log: 100
 // console.log(rating(checks, 66)); // should log: 75
+
+// CHALLENGE 14
+// Create a function pipe that accepts an array (of functions) and a value. 
+// pipe should input the value into the first function in the array, and 
+// then use the output from that function as input for the second function, 
+// and then use the output from that function as input for the third function, 
+// and so forth, until we have an output from the last function in the array. 
+// pipe should return the final output.
+
+const pipe = (fns, value) => {
+  let prev = value;
+  fns.forEach(fn => {
+    prev = fn(prev)
+  });
+  return prev;
+};
+
+// /*** Uncomment these to check your work! ***/
+// const capitalize = str => str.toUpperCase();
+// const addLowerCase = str => str + str.toLowerCase();
+// const repeat = str => str + str;
+// const capAddlowRepeat = [capitalize, addLowerCase, repeat];
+// console.log(pipe(capAddlowRepeat, 'cat')); // should log: 'CATcatCATcat'
+
+
+// CHALLENGE 15
+// Create a function highestFunc that accepts an object (which will contain functions) 
+// and a subject (which is any value). highestFunc should return the key of the 
+// object whose associated value (which will be a function) returns the largest number, 
+// when the subject is given as input.
+
+const highestFunc = (objOfFuncs, subject) => {
+  const keys = Object.keys(objOfFuncs)
+  
+  return keys.reduce((prev, curr) => 
+    objOfFuncs[prev](subject) > objOfFuncs[curr](subject) ? prev : curr)
+};
+
+// /*** Uncomment these to check your work! ***/
+const groupOfFuncs = {};
+groupOfFuncs.double = n => n * 2;
+groupOfFuncs.addTen = n => n + 10;
+groupOfFuncs.inverse = n => n * -1;
+console.log(highestFunc(groupOfFuncs, 5)); // should log: 'addTen'
+console.log(highestFunc(groupOfFuncs, 11)); // should log: 'double'
+console.log(highestFunc(groupOfFuncs, -20)); // should log: 'inverse'
