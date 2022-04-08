@@ -62,14 +62,39 @@ const multiMap = (arrVals, arrCallbacks) => {
   return output;
 };
 
-console.log(
-  multiMap(
-    ['catfood', 'glue', 'beer'], 
-    [
-      (str) => str.toUpperCase(), 
-      (str) => str[0].toUpperCase() + str.slice(1).toLowerCase(), 
-      (str) => str + str
-    ]
-  )
-);
+// console.log(
+//   multiMap(
+//     ['catfood', 'glue', 'beer'], 
+//     [
+//       (str) => str.toUpperCase(), 
+//       (str) => str[0].toUpperCase() + str.slice(1).toLowerCase(), 
+//       (str) => str + str
+//     ]
+//   )
+// );
 // should log: { catfood: ['CATFOOD', 'Catfood', 'catfoodcatfood'], glue: ['GLUE', 'Glue', 'glueglue'], beer: ['BEER', 'Beer', 'beerbeer'] }
+
+
+// CHALLENGE 11
+// Create a function commutative that accepts two callbacks and a value. commutative 
+// will return a boolean indicating if the passing the value into the first function, 
+// and then passing the resulting output into the second function, yields the same 
+// output as the same operation with the order of the functions reversed (passing 
+// the value into the second function, and then passing the output into the first 
+// function).
+
+const commutative = (fn1, fn2, value) => {
+  const regular = fn2(fn1(value));
+  const inverted = fn1(fn2(value));
+
+  return regular === inverted;
+};
+
+// /*** Uncomment these to check your work! ***/
+// const multBy3 = n => n * 3;
+// const divBy4 = n => n / 4;
+// const subtract5 = n => n - 5;
+// console.log(commutative(multBy3, divBy4, 11)); // should log: true
+// console.log(commutative(multBy3, subtract5, 10)); // should log: false
+// console.log(commutative(divBy4, subtract5, 48)); // should log: false
+
