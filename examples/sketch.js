@@ -92,3 +92,47 @@ const commutative = (fn1, fn2, value) => {
 // console.log(commutative(multBy3, subtract5, 10)); // should log: false
 // console.log(commutative(divBy4, subtract5, 48)); // should log: false
 
+
+// CHALLENGE 12
+// Create a function objFilter that accepts an object and a callback. objFilter 
+// should make a new object, and then iterate through the passed-in object, 
+// using each key as input for the callback. If the output from the callback 
+// is equal to the corresponding value, then that key-value pair is copied into 
+// the new object. objFilter will return this new object.
+
+const objFilter = (obj, callback) => {
+  let output = {};
+  for (let key in obj) {
+    if (obj[key] === callback(key)) {
+      output = { ...output, [key]: obj[key] }
+    }
+  }
+  return output;
+};
+
+// /*** Uncomment these to check your work! ***/
+const startingObj = {};
+startingObj[6] = 3;
+startingObj[2] = 1;
+startingObj[12] = 4;
+const half = n => n / 2;
+console.log(objFilter(startingObj, half)); // should log: { 2: 1, 6: 3 }
+
+// CHALLENGE 13
+// Create a function rating that accepts an array (of functions) and a value. 
+// All the functions in the array will return true or false. rating should 
+// return the percentage of functions from the array that return true when 
+// the value is used as input.
+
+const rating = (arrOfFuncs, value) => {
+
+};
+
+// /*** Uncomment these to check your work! ***/
+// const isEven = n => n % 2 === 0;
+// const greaterThanFour = n => n > 4;
+// const isSquare = n => Math.sqrt(n) % 1 === 0;
+// const hasSix = n => n.toString().includes('6');
+// const checks = [isEven, greaterThanFour, isSquare, hasSix];
+// console.log(rating(checks, 64)); // should log: 100
+// console.log(rating(checks, 66)); // should log: 75
