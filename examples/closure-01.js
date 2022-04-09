@@ -178,40 +178,88 @@ const avgSoFar = average();
 // console.log(avgSoFar(12)); // should log: 8
 // console.log(avgSoFar()); // should log: 8
 
-// <---- CHALLENGE 10 ---->
+// <---- ✅ CHALLENGE 10 ---->
 // Create a function makeFuncTester that accepts an array (of two-element sub-arrays),
 // and returns a function (that will accept a callback).
 // The returned function should return true if the first elements (of each sub-array)
 // being passed into the callback all yield the corresponding second elements (of the same sub-array).
 // Otherwise, the returned function should return false.
 const makeFuncTester = (arrOfTests) => {
-  return function(cb) {
-    let result = true;
-    arrOfTests.forEach((subArr) => {
-      if (cb(subArr[0]) !== subArr[1]) {
-        result = false;
+  return function (cb) {
+    let error = false;
+    for (let i = 0; i < arrOfTests.length; i++) {
+      if (cb(arrOfTests[i][0]) !== arrOfTests[i][1]) {
+        error = true;
+        break;
       }
-    });
-    return result;
+    }
+    return !error;
   };
 };
 
 // /*** Uncomment these to check your work! ***/
 const capLastTestCases = [];
-capLastTestCases.push(['hello', 'hellO']);
-capLastTestCases.push(['goodbye', 'goodbyE']);
-capLastTestCases.push(['howdy', 'howdY']);
-const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
-const capLastAttempt1 = str => str.toUpperCase();
-const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
-console.log(shouldCapitalizeLast(capLastAttempt1)); // should log: false
-console.log(shouldCapitalizeLast(capLastAttempt2)); // should log: true
+// capLastTestCases.push(['hello', 'hellO']);
+// capLastTestCases.push(['goodbye', 'goodbyE']);
+// capLastTestCases.push(['howdy', 'howdY']);
+// const shouldCapitalizeLast = makeFuncTester(capLastTestCases);
+// const capLastAttempt1 = str => str.toUpperCase();
+// const capLastAttempt2 = str => str.slice(0, -1) + str.slice(-1).toUpperCase();
+// console.log(shouldCapitalizeLast(capLastAttempt1)); // should log: false
+// console.log(shouldCapitalizeLast(capLastAttempt2)); // should log: true
 
-// <---- CHALLENGE 11 ---->
-const makeHistory = (limit) => {};
+// <---- ❌ CHALLENGE 11 ---->
+// Create a function makeHistory that accepts a number (which will serve as a limit),
+// and returns a function (that will accept a string).
+// The returned function will save a history of the most recent "limit" number of strings
+// passed into the returned function (one per invocation only).
+// Every time a string is passed into the function,
+// the function should return that same string with the word 'done' after it (separated by a space).
+// However, if the string 'undo' is passed into the function, then the function should delete the last action
+// saved in the history, and return that delted string with the word 'undone' after (separated by a space).
+// If 'undo' is passed into the function and the function's history is empty,
+// then the function should return the string 'nothing to undo'.
+
+const makeHistory = (limit) => {
+  
+  let history = [];
+
+  return function (str) {
+
+    if (history.length >= limit) {
+      return str === 'undo' ? undoHistory(true) : exceededHistory();
+    } else if (history.length == 0) {
+      return str === 'undo' ? undoHistory(false) : addHistory();
+    } else {
+      return str === 'undo' ? undoHistory(true) : addHistory();
+    }
+
+    function exceededHistory() {
+      const withoutFirst = history.slice(1, history.length);
+      history = [ ...withoutFirst, str ];
+      return `${str} done, deleted item for exceded history capacity, ${JSON.stringify(history)}`;
+    }
+
+    function addHistory() {
+      history.push(str);
+      return `${str} done, ${JSON.stringify(history)}`;
+    }
+
+    function undoHistory(undo) {
+      if (undo) {
+        const lastItem = (history.slice(history.length - 1, history.length))[0];
+        history.pop();
+        return `${lastItem} undone, ${JSON.stringify(history)}`;
+      } else {
+        return `nothing to undo, ${JSON.stringify(history)}`;
+      }
+    }
+
+  };
+};
 
 // /*** Uncomment these to check your work! ***/
-// const myActions = makeHistory(2);
+const myActions = makeHistory(2);
 // console.log(myActions('jump')); // should log: 'jump done'
 // console.log(myActions('undo')); // should log: 'jump undone'
 // console.log(myActions('walk')); // should log: 'walk done'
@@ -220,40 +268,3 @@ const makeHistory = (limit) => {};
 // console.log(myActions('undo')); // should log: 'pose undone'
 // console.log(myActions('undo')); // should log: 'code undone'
 // console.log(myActions('undo')); // should log: 'nothing to undo'
-
-// <---- CHALLENGE 12 ---->
-const blackjack = (array) => {};
-
-// /*** Uncomment these to check your work! ***/
-
-// /*** DEALER ***/
-// const deal = blackjack([2, 6, 1, 7, 11, 4, 6, 3, 9, 8, 9, 3, 10, 4, 5, 3, 7, 4, 9, 6, 10, 11]);
-
-// /*** PLAYER 1 ***/
-// const i_like_to_live_dangerously = deal(4, 5);
-// console.log(i_like_to_live_dangerously()); // should log: 9
-// console.log(i_like_to_live_dangerously()); // should log: 11
-// console.log(i_like_to_live_dangerously()); // should log: 17
-// console.log(i_like_to_live_dangerously()); // should log: 18
-// console.log(i_like_to_live_dangerously()); // should log: 'bust'
-// console.log(i_like_to_live_dangerously()); // should log: 'you are done!'
-// console.log(i_like_to_live_dangerously()); // should log: 'you are done!'
-
-// /*** BELOW LINES ARE FOR THE BONUS ***/
-
-// /*** PLAYER 2 ***/
-// const i_TOO_like_to_live_dangerously = deal(2, 2);
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 4
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 15
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 19
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 'bust'
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 'you are done!
-// console.log(i_TOO_like_to_live_dangerously()); // should log: 'you are done!
-
-// /*** PLAYER 3 ***/
-// const i_ALSO_like_to_live_dangerously = deal(3, 7);
-// console.log(i_ALSO_like_to_live_dangerously()); // should log: 10
-// console.log(i_ALSO_like_to_live_dangerously()); // should log: 13
-// console.log(i_ALSO_like_to_live_dangerously()); // should log: 'bust'
-// console.log(i_ALSO_like_to_live_dangerously()); // should log: 'you are done!
-// console.log(i_ALSO_like_to_live_dangerously()); // should log: 'you are done!
