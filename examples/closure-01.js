@@ -208,7 +208,7 @@ const capLastTestCases = [];
 // console.log(shouldCapitalizeLast(capLastAttempt1)); // should log: false
 // console.log(shouldCapitalizeLast(capLastAttempt2)); // should log: true
 
-// <---- ❌ CHALLENGE 11 ---->
+// <---- ✅ CHALLENGE 11 ---->
 // Create a function makeHistory that accepts a number (which will serve as a limit),
 // and returns a function (that will accept a string).
 // The returned function will save a history of the most recent "limit" number of strings
