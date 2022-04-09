@@ -9,8 +9,6 @@
         "semi": ["error", "always"],
         "quotes": ["error", "single"],
         "no-trailing-spaces": [2, { "skipBlankLines": true }],
-        "comma-dangle": ["error", "never"]
-        
-    },
-    "parser": "@babel/eslint-parser"
+        "comma-dangle": ["error", "never"]   
+    }
 }
